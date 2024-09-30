@@ -1,37 +1,82 @@
-import {useContext} from 'react'
-import { EntryContext } from '../utilities/globalContext'
-import { EntryContextType, Entry } from '../@types/context'
-import { useNavigate, Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { Edit2, Trash2 } from "lucide-react";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Entry, EntryContextType } from "../@types/context";
+import { EntryContext } from "../utilities/globalContext";
 
-export default function AllEntries(){
-    const {entries, deleteEntry} = useContext(EntryContext) as EntryContextType
-    let navigate = useNavigate();
-    if(entries.length == 0){
-        return(
-            <section>
-                <h1 className="text-center font-semibold text-2xl m-5">You don't have any card</h1>
-                <p className="text-center font-medium text-md">Lets <Link className="text-blue-400 underline underline-offset-1" to="/create">Create One</Link></p>
-            </section>
-        )
-    }
-    return(
-        <section className="grid grid-cols-2 md:grid-cols-4">
-            {entries.map((entry: Entry, index: number) => {
-                return(
-                    <div id={entry.id} key={index}className="bg-gray-300 shadow-md shadow-gray-500 m-3 p-4 rounded flex flex-col justify-between">
-                        <h1 className="font-bold text-sm md:text-lg">{entry.title}</h1>
-                        <p className="text-center text-lg font-light md:mt-2 md:mb-4 mt-1 mb-3">{entry.description}</p>
-                        <section className="flex items-center justify-between flex-col md:flex-row pt-2 md:pt-0">
-                        <div className="flex justify-center">
-                            <button onClick={()=> {deleteEntry(entry.id as string)}} className="m-1 md:m-2 p-1 font-semibold rounded-md bg-red-500 hover:bg-red-700">✖</button>
-                            <button onClick={()=> {navigate(`/edit/${entry.id}`, { replace: true });}} className="m-1 md:m-2 p-1 font-semibold rounded-md bg-blue-500 hover:bg-blue-700">🖊</button>
-                        </div>
-                        <time className="text-right text-sm md:text-lg">{new Date(entry.created_at.toString()).toLocaleDateString()}</time>
-                        </section>
-                        
-                    </div>
-                )
-            })}
-        </section>
-    )
+export default function AllEntries() {
+  const { entries, deleteEntry } = useContext(EntryContext) as EntryContextType;
+  let navigate = useNavigate();
+
+  if (entries.length == 0) {
+    return (
+      <motion.section
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="flex flex-col items-center justify-center h-[calc(100vh-200px)] text-center"
+      >
+        <h1 className="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-200">No Entries Yet</h1>
+        <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">Start by creating your first entry!</p>
+        <Link
+          to="/create"
+          className="px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-200 text-lg font-semibold"
+        >
+          Create New Entry
+        </Link>
+      </motion.section>
+    );
+  }
+
+  return (
+    <motion.section
+      initial={{ opacity: 0, y: 50 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 50 }}
+      transition={{ duration: 0.5 }}
+      className="container mx-auto px-4 py-8"
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {entries.map((entry: Entry) => (
+          <div
+            key={entry.id}
+            className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-all duration-200"
+          >
+            <div className="p-6">
+              <h2 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-200">{entry.title}</h2>
+              <p className="text-gray-600 text-l dark:text-gray-400 mb-4">{entry.description}</p>
+              <time className="text-xl font-medium text-gray-700 dark:text-gray-300">
+                {new Date(entry.scheduled_at.toString()).toLocaleString([], { dateStyle: "long", timeStyle: "short" })}
+              </time>
+            </div>
+            <div className="py-3 px-6 flex justify-between items-center">
+              <div className="flex items-center text-xs text-gray-500 dark:text-gray-400">
+                <time>
+                  Last Updated at{" "}
+                  {new Date(entry.created_at.toString()).toLocaleString([], { dateStyle: "short", timeStyle: "short" })}
+                </time>
+              </div>
+              <div className="flex space-x-2">
+                <button
+                  onClick={() => navigate(`/edit/${entry.id}`)}
+                  className="p-2 text-blue-500 hover:text-blue-600 transition-colors duration-200"
+                  aria-label="Edit entry"
+                >
+                  <Edit2 size={18} />
+                </button>
+                <button
+                  onClick={() => deleteEntry(entry.id as string)}
+                  className="p-2 text-red-500 hover:text-red-600 transition-colors duration-200"
+                  aria-label="Delete entry"
+                >
+                  <Trash2 size={18} />
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </motion.section>
+  );
 }
