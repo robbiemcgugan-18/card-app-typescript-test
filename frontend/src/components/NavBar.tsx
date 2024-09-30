@@ -23,6 +23,7 @@ export default function NavBar() {
     <nav className="flex justify-center items-center gap-8 py-8">
       <NavLink to="/" className={({ isActive }) => `${linkStyle} ${isActive ? activeStyle : inactiveStyle}`}>
         {({ isActive }) => (
+          // The underline animation is only triggered when the link is active
           <motion.div
             className="relative"
             initial={false}
