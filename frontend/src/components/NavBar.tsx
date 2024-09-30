@@ -6,11 +6,14 @@ export default function NavBar() {
   const location = useLocation();
   const [isLoaded, setIsLoaded] = useState(false);
 
+  // Force a re-render when the component has mounted to ensure that the underline is in the correct position
+  // Otherwise the underline will be in the wrong position on the first render
   useEffect(() => {
     // This will trigger a re-render after the component has mounted
     setIsLoaded(true);
   }, []);
 
+  // Stylings for the nav bar links in different states
   const linkStyle = "px-8 py-4 text-xl font-bold rounded-full transition-all duration-300 relative";
   const activeStyle = "bg-blue-600 text-white dark:bg-blue-800";
   const inactiveStyle =
@@ -23,7 +26,7 @@ export default function NavBar() {
           <motion.div
             className="relative"
             initial={false}
-            animate={isLoaded ? { y: 0 } : { y: 0 }} // This forces a re-render when isLoaded changes
+            animate={isLoaded ? { y: 0 } : { y: 0 }}
           >
             All Entries
             {isActive && (
@@ -43,7 +46,7 @@ export default function NavBar() {
           <motion.div
             className="relative"
             initial={false}
-            animate={isLoaded ? { y: 0 } : { y: 0 }} // This forces a re-render when isLoaded changes
+            animate={isLoaded ? { y: 0 } : { y: 0 }}
           >
             New Entry
             {isActive && (

@@ -1,3 +1,4 @@
+//Added scheduled_at to Entry interface
 export interface Entry {
   id?: string;
   title: string;

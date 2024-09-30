@@ -9,6 +9,7 @@ export default function AllEntries() {
   const { entries, deleteEntry } = useContext(EntryContext) as EntryContextType;
   let navigate = useNavigate();
 
+  // If there are no entries, display a message to create a new entry
   if (entries.length == 0) {
     return (
       <motion.section
@@ -39,6 +40,7 @@ export default function AllEntries() {
     >
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {entries.map((entry: Entry) => (
+          // One of the individual entry cards with custom tailwind styling
           <div
             key={entry.id}
             className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-all duration-200"
@@ -54,7 +56,7 @@ export default function AllEntries() {
               <div className="flex items-center text-xs text-gray-500 dark:text-gray-400">
                 <time>
                   Last Updated at{" "}
-                  {new Date(entry.created_at.toString()).toLocaleString([], { dateStyle: "short", timeStyle: "short" })}
+                  {new Date(entry.created_at.toString()).toLocaleString([], { dateStyle: "long", timeStyle: "short" })}
                 </time>
               </div>
               <div className="flex space-x-2">

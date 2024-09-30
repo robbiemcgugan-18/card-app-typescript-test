@@ -24,11 +24,19 @@ describe("Server endpoints", () => {
     await server.close();
   });
 
+  // Tests the get all entries endpoint
   describe("GET /get/", () => {
     it("should return all entries", async () => {
       const mockEntries = [
         {
           id: "1",
+          title: "Test Entry",
+          description: "Test description",
+          created_at: new Date().toISOString(),
+          scheduled_at: new Date().toISOString(),
+        },
+        {
+          id: "2",
           title: "Test Entry",
           description: "Test description",
           created_at: new Date().toISOString(),
@@ -43,6 +51,9 @@ describe("Server endpoints", () => {
     });
   });
 
+  // Tests the get unique entry endpoint
+  // Test 1: Tests the endpoint with a valid entry id
+  // Test 2: Tests the endpoint with an invalid entry id
   describe("GET /get/:id", () => {
     it("should return a single entry", async () => {
       const mockEntry = {
@@ -68,6 +79,9 @@ describe("Server endpoints", () => {
     });
   });
 
+  // Tests the create entry endpoint
+  // Test 1: Tests the endpoint with valid data
+  // Test 2: Tests the endpoint with invalid data
   describe("POST /create/", () => {
     it("should create a new entry", async () => {
       const newEntry = { title: "New Entry", description: "Test description" };
@@ -94,6 +108,9 @@ describe("Server endpoints", () => {
     });
   });
 
+  // Tests the delete entry endpoint
+  // Test 1: Tests the endpoint with a valid entry id
+  // Test 2: Tests the endpoint with an invalid entry id
   describe("DELETE /delete/:id", () => {
     it("should delete an entry", async () => {
       (Prisma.entry.delete as jest.Mock).mockResolvedValue({});
@@ -112,6 +129,9 @@ describe("Server endpoints", () => {
     });
   });
 
+  // Tests the update entry endpoint
+  // Test 1: Tests the endpoint with valid data
+  // Test 2: Tests the endpoint with invalid data
   describe("PUT /update/:id", () => {
     it("should update an entry", async () => {
       const updatedEntry = { id: "1", title: "Updated Entry", description: "Updated description" };

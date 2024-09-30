@@ -55,6 +55,7 @@ export default function NewEntry() {
     navigate("/"); // Added
   };
 
+  // Added a date time picker for the scheduled_at field
   return (
     <section className="flex justify-center flex-col w-full max-w-md mx-auto mt-10 gap-5 bg-gray-100 dark:bg-gray-700 p-8 rounded-md shadow-md">
       <input

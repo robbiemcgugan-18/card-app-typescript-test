@@ -47,11 +47,13 @@ export default function EditEntry() {
   const [newEntry, setNewEntry] = useState<Entry>(emptyEntry);
   const navigate = useNavigate();
 
+  // Set the new entry to the entry with the id from the URL
   useEffect(() => {
     const entry = entries.find((entry) => entry.id == id);
     if (entry) setNewEntry(entry);
   }, []);
 
+  // Update the new entry when the input changes either with the raw value for the text fields or the parsed date for the date field
   const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
     setNewEntry((prev) => ({
@@ -61,11 +63,12 @@ export default function EditEntry() {
   };
 
   const handleSend = (e: MouseEvent<HTMLButtonElement>) => {
-    newEntry.created_at = new Date();
+    newEntry.created_at = new Date(); // Sets the created_at field to the current date and time
     updateEntry(id as string, newEntry);
     navigate("/");
   };
 
+  // Added a date time picker for the scheduled_at field
   return (
     <section className="flex justify-center flex-col w-full max-w-md mx-auto mt-10 gap-5 bg-gray-100 dark:bg-gray-700 p-8 rounded-md shadow-md">
       <input
@@ -85,7 +88,7 @@ export default function EditEntry() {
       />
       <div className="flex flex-col">
         <label htmlFor="scheduled_at" className="text-gray-900 dark:text-white">
-          For
+          Scheduled For
         </label>
         <input
           className="p-3 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white"

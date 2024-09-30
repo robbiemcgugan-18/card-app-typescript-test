@@ -6,11 +6,12 @@ const Toggle = () => {
   const { isDarkMode, toggleTheme } = useTheme();
 
   return (
+    // The toggle button which animates between light mode and dark mode when clicked
     <div className="fixed top-4 right-4 z-10 flex items-center">
       <span className="mr-2 text-sm font-medium">{isDarkMode ? "Dark Mode" : "Light Mode"}</span>
       <motion.div
         className="w-14 h-7 bg-gray-300 dark:bg-gray-600 rounded-full p-1 cursor-pointer"
-        onClick={toggleTheme}
+        onClick={toggleTheme} // Toggle the theme when the div is clicked
         initial={false}
         animate={{ backgroundColor: isDarkMode ? "#4B5563" : "#D1D5DB" }}
       >

@@ -13,6 +13,7 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     return savedTheme === "dark";
   });
 
+  // Uses Tailwind CSS dark mode classes to toggle the theme
   useEffect(() => {
     localStorage.setItem("theme", isDarkMode ? "dark" : "light");
     if (isDarkMode) {
@@ -26,13 +27,15 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
     setIsDarkMode(!isDarkMode);
   };
 
+  // The provider component that wraps the entire application
   return <ThemeContext.Provider value={{ isDarkMode, toggleTheme }}>{children}</ThemeContext.Provider>;
 };
 
 export const useTheme = () => {
+
   const context = useContext(ThemeContext);
   if (!context) {
-    throw new Error("useTheme must be used within a ThemeProvider");
+    throw new Error("useTheme must be used within a child of the ThemeProvider");
   }
   return context;
 };

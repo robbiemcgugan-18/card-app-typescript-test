@@ -8,6 +8,7 @@ import EditEntry from "./routes/EditEntry";
 import NewEntry from "./routes/NewEntry";
 import { EntryProvider } from "./utilities/globalContext";
 
+// Wraps the page components with a page transition so that we do not need to animate each page individually
 const PageWrapper = ({ children }: { children: React.ReactNode }) => {
   const variants = {
     initial: { opacity: 0, x: -200 },
@@ -27,6 +28,7 @@ const PageWrapper = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
+// Uses the page wrapper to animate the routes
 function AnimatedRoutes() {
   const location = useLocation();
   return (
@@ -61,6 +63,7 @@ function AnimatedRoutes() {
   );
 }
 
+// The main App component which wraps the entire application
 export default function App() {
   return (
     <section>
