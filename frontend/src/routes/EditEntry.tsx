@@ -63,6 +63,7 @@ export default function EditEntry() {
   };
 
   const handleSend = (e: MouseEvent<HTMLButtonElement>) => {
+    if (!newEntry.title) return; // Added to prevent updating an entry without a title
     newEntry.created_at = new Date(); // Sets the created_at field to the current date and time
     updateEntry(id as string, newEntry);
     navigate("/");

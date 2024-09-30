@@ -50,12 +50,14 @@ export default function NewEntry() {
 
   const handleSend = (e: MouseEvent<HTMLButtonElement>) => {
     newEntry.created_at = new Date();
+
+    if (!newEntry.title) return;
+    
     saveEntry(newEntry);
     setNewEntry(emptyEntry);
     navigate("/"); // Added
   };
 
-  // Added a date time picker for the scheduled_at field
   return (
     <section className="flex justify-center flex-col w-full max-w-md mx-auto mt-10 gap-5 bg-gray-100 dark:bg-gray-700 p-8 rounded-md shadow-md">
       <input
@@ -75,7 +77,7 @@ export default function NewEntry() {
       />
       <div className="flex flex-col">
         <label htmlFor="scheduled_at" className="text-gray-900 dark:text-white">
-          For
+          Scheduled For
         </label>
         <input
           className="p-3 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
